@@ -414,6 +414,7 @@ const timerElement = document.getElementById('timer');
 let questionNum = 0;
 let timer;
 let timeLeft = 10;
+let timerInterval;
 
 function moveToNextQuestion(){
     if(questionNum === timer){
@@ -423,33 +424,8 @@ function moveToNextQuestion(){
     }
 }
 
-function startTimer(duration, display){
-    let timer = duration,minutes,seconds;
-    const interval = setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent =  "Time Remaing " + ":" + minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            clearInterval(interval);
-            display.textContent = "Time Expired!";
-            scoreQuestion(0); 
-            handleNextClick()
-        }
-    }, 1000);
-}
-window.onload = function () {
-    const oneMinute = 60; // 1 minute in seconds
-    const display = document.querySelector('#timer');
-    startTimer(oneMinute, display);
-};
     
-
-
 
 quizQuestions.innerHTML = `
 <span>Question ${quiz[questionNum].question_no}</span>
@@ -470,28 +446,74 @@ quizQuestions.innerHTML = `
 
 
 function handleNextClick() {
-checkAnswer()
-questionNum++;
-if (questionNum < quiz.length){
-quizQuestions.innerHTML = `<span>Question ${quiz[questionNum].question_no}</span>
-<p>${quiz[questionNum].question}</p>
+    checkAnswer()
+    
+    if (questionNum < quiz.length){
+        questionNum++;
+    quizQuestions.innerHTML = `<span>Question ${quiz[questionNum].question_no}</span>
+    <p>${quiz[questionNum].question}</p>
+    
+    <p></p>
+    
+    <label>
+      <input type="radio" name="answer" value = "${quiz[questionNum].option1}"> ${quiz[questionNum].option1}
+    </label>
+    <label>
+      <input type="radio" name="answer" value = "${quiz[questionNum].option2}" id="option2"> ${quiz[questionNum].option2}
+    </label>
+    <label>
+      <input type="radio" name="answer" value = "${quiz[questionNum].option3}"> ${quiz[questionNum].option3}
+    </label>`;
 
-<p></p>
+    const oneMinute = 60; 
+        const display = document.querySelector('#timer');
+        startTimer(oneMinute, display);
+    }
+    
+    else{
+    endQuiz();
+    }
+    }
 
-<label>
-  <input type="radio" name="answer" value = "${quiz[questionNum].option1}"> ${quiz[questionNum].option1}
-</label>
-<label>
-  <input type="radio" name="answer" value = "${quiz[questionNum].option2}" id="option2"> ${quiz[questionNum].option2}
-</label>
-<label>
-  <input type="radio" name="answer" value = "${quiz[questionNum].option3}"> ${quiz[questionNum].option3}
-</label>`;
+function startTimer(duration, display){
+    let timer = duration,minutes,seconds;
+
+    if(timerInterval){
+        clearInterval(timerInterval)
+    }
+
+    timerInterval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent =  "Time Remaing " + ":" + minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            clearInterval(interval);
+            display.textContent = "Time Expired!";
+            
+        }
+
+    }, 1000)
+
 }
-else{
-endQuiz();
-}
-}
+   
+window.onload = function () {
+    const oneMinute = 60; 
+    const display = document.querySelector('#timer');
+    startTimer(oneMinute, display);
+};
+
+
+
+
+// function scoreQuestion(){
+//     console.log(`scored:`, $(score))
+// }
 
 // scoreElement.innerHTML = 'score';
 let score = 0;
@@ -512,12 +534,15 @@ alert('wrong')
 
 };
 
-
 function updateScore() {
-scoreElement.innerHTML = ` ${score}`;
-scoreElement.textContent = ` ${score}`;
-
-}
+    const scoreElement = document.getElementById('scoreElementId'); // Replace with your actual ID
+    if (scoreElement) {
+      scoreElement.innerHTML = `Score: ${currentScore}`; // Update with the actual score
+    } else {
+      console.error('Score element not found');
+    }
+  }
+  
 
 // next.addEventListener('click', checkAnswer);
 
@@ -529,5 +554,7 @@ next.style.display = "none"
 }
 
 // console.log(1 + '1')
+
+
 
 
