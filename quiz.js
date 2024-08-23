@@ -410,54 +410,91 @@ const quizQuestions = document.getElementById('questions');
 const option = document.getElementById('options');
 const next = document.getElementById("next")
 const scoreElement = document.getElementById('score'); // Get the score element
+const timerElement = document.getElementById('timer');
 let questionNum = 0;
+let timer;
+let timeLeft = 10;
+
+function moveToNextQuestion(){
+    if(questionNum === timer){
+        handleNextClick()
+    }else{
+        moveToNextQuestion()
+    }
+}
+
+function startTimer(duration, display){
+    let timer = duration,minutes,seconds;
+    const interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent =  "Time Remaing " + ":" + minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            clearInterval(interval);
+            display.textContent = "Time Expired!";
+            scoreQuestion(0); 
+            handleNextClick()
+        }
+    }, 1000);
+}
+window.onload = function () {
+    const oneMinute = 60; // 1 minute in seconds
+    const display = document.querySelector('#timer');
+    startTimer(oneMinute, display);
+};
+    
 
 
-  quizQuestions.innerHTML = `
-    <span>Question ${quiz[questionNum].question_no}</span>
-    <p>${quiz[questionNum].question}</p>
-    
-    <p></p>
-    
-    <label>
-      <input type="radio" name="answer" value = "${quiz[questionNum].option1}" id="option1"> ${quiz[questionNum].option1}
-    </label>
-    <br/>
-    <label>
-      <input type="radio" name="answer" value="${quiz[questionNum].option2}" id="option2"> ${quiz[questionNum].option2}
-    </label>
-    <br/>
-    <label>
-      <input type="radio" name="answer" value="${quiz[questionNum].option1}" id="option3"> ${quiz[questionNum].option3}
-    </label>`;
+
+quizQuestions.innerHTML = `
+<span>Question ${quiz[questionNum].question_no}</span>
+<p>${quiz[questionNum].question}</p>
+
+
+<label>
+  <input type="radio" name="answer" value = "${quiz[questionNum].option1}" id="option1"> ${quiz[questionNum].option1}
+</label>
+<br/>
+<label>
+  <input type="radio" name="answer" value="${quiz[questionNum].option2}" id="option2"> ${quiz[questionNum].option2}
+</label>
+<br/>
+<label>
+  <input type="radio" name="answer" value="${quiz[questionNum].option1}" id="option3"> ${quiz[questionNum].option3}
+</label>`;
 
 
 function handleNextClick() {
-  checkAnswer()
-  questionNum++;
-  if (questionNum < quiz.length){
-    quizQuestions.innerHTML = `<span>Question ${quiz[questionNum].question_no}</span>
-    <p>${quiz[questionNum].question}</p>
-    
-    <p></p>
-    
-    <label>
-      <input type="radio" name="answer" value = "${quiz[questionNum].option1}"> ${quiz[questionNum].option1}
-    </label>
-    <label>
-      <input type="radio" name="answer" value = "${quiz[questionNum].option2}" id="option2"> ${quiz[questionNum].option2}
-    </label>
-    <label>
-      <input type="radio" name="answer" value = "${quiz[questionNum].option3}"> ${quiz[questionNum].option3}
-    </label>`;
-  }
-  else{
-    endQuiz();
-  }
+checkAnswer()
+questionNum++;
+if (questionNum < quiz.length){
+quizQuestions.innerHTML = `<span>Question ${quiz[questionNum].question_no}</span>
+<p>${quiz[questionNum].question}</p>
+
+<p></p>
+
+<label>
+  <input type="radio" name="answer" value = "${quiz[questionNum].option1}"> ${quiz[questionNum].option1}
+</label>
+<label>
+  <input type="radio" name="answer" value = "${quiz[questionNum].option2}" id="option2"> ${quiz[questionNum].option2}
+</label>
+<label>
+  <input type="radio" name="answer" value = "${quiz[questionNum].option3}"> ${quiz[questionNum].option3}
+</label>`;
+}
+else{
+endQuiz();
+}
 }
 
 // scoreElement.innerHTML = 'score';
- let score = 0;
+let score = 0;
 
 function checkAnswer() {
 const selectedAnswer = document.querySelector('input[name="answer"]:checked');
@@ -470,25 +507,27 @@ updateScore();
 // scoreElement.textContentL= 'score'
 } 
 else {
-  alert('wrong')
+alert('wrong')
 } 
 
 };
 
 
 function updateScore() {
-  scoreElement.innerHTML = ` ${score}`;
-  scoreElement.textContent = ` ${score}`;
+scoreElement.innerHTML = ` ${score}`;
+scoreElement.textContent = ` ${score}`;
 
- }
+}
 
 // next.addEventListener('click', checkAnswer);
 
 
 function endQuiz() {
-  quizQuestions.innerHTML = "Quiz completed"
-  
-  next.style.display = "none"
+quizQuestions.innerHTML = "Quiz completed"
+
+next.style.display = "none"
 }
 
 // console.log(1 + '1')
+
+
