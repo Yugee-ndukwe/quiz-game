@@ -404,25 +404,21 @@ const quiz = [
 ;
 
 
-// function for displaying quix questions
+// function for displaying quiz questions
 
 const quizQuestions = document.getElementById('questions');
 const option = document.getElementById('options');
+const previous = document.getElementById('previous')
 const next = document.getElementById("next")
 const scoreElement = document.getElementById('score'); // Get the score element
 const timerElement = document.getElementById('timer');
+// const continue = document.getElementById("continue")
+
 let questionNum = 0;
 let timer;
-let timeLeft = 10;
-let timerInterval;
-
-function moveToNextQuestion(){
-    if(questionNum === timer){
-        handleNextClick()
-    }else{
-        moveToNextQuestion()
-    }
-}
+// let timeLeft = 10;
+let totalQuizTime = 180;
+let timeLeft = totalQuizTime;
 
 
     
@@ -444,78 +440,149 @@ quizQuestions.innerHTML = `
   <input type="radio" name="answer" value="${quiz[questionNum].option1}" id="option3"> ${quiz[questionNum].option3}
 </label>`;
 
+function previousBtn() {
+    if (questionNum > 0) {
+        // Decrease the question number to move back
+        questionNum--;
 
-function handleNextClick() {
-    checkAnswer()
-    
-    if (questionNum < quiz.length){
-        questionNum++;
-    quizQuestions.innerHTML = `<span>Question ${quiz[questionNum].question_no}</span>
-    <p>${quiz[questionNum].question}</p>
-    
-    <p></p>
-    
-    <label>
-      <input type="radio" name="answer" value = "${quiz[questionNum].option1}"> ${quiz[questionNum].option1}
-    </label>
-    <label>
-      <input type="radio" name="answer" value = "${quiz[questionNum].option2}" id="option2"> ${quiz[questionNum].option2}
-    </label>
-    <label>
-      <input type="radio" name="answer" value = "${quiz[questionNum].option3}"> ${quiz[questionNum].option3}
-    </label>`;
-
-    const oneMinute = 60; 
-        const display = document.querySelector('#timer');
-        startTimer(oneMinute, display);
-    }
-    
-    else{
-    endQuiz();
-    }
-    }
-
-function startTimer(duration, display){
-    let timer = duration,minutes,seconds;
-
-    if(timerInterval){
-        clearInterval(timerInterval)
-    }
-
-    timerInterval = setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent =  "Time Remaing " + ":" + minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            clearInterval(interval);
-            display.textContent = "Time Expired!";
-            
+        // Hide the previous button if it's the first question
+        if (questionNum === 0) {
+            previous.style.display = 'none';
         }
 
-    }, 1000)
-
+        // Update the quiz content to the previous question
+        quizQuestions.innerHTML = `
+            <span>Question ${quiz[questionNum].question_no}</span>
+            <p>${quiz[questionNum].question}</p>
+            
+            <label>
+              <input type="radio" name="answer" value="${quiz[questionNum].option1}"> ${quiz[questionNum].option1}
+            </label>
+            <br/>
+            <label>
+              <input type="radio" name="answer" value="${quiz[questionNum].option2}"> ${quiz[questionNum].option2}
+            </label>
+            <br/>
+            <label>
+              <input type="radio" name="answer" value="${quiz[questionNum].option3}"> ${quiz[questionNum].option3}
+            </label>`;
+    }
 }
+
+function handleNextClick() {
+    // Check the user's answer
+    checkAnswer();
+
+    // Increase the question number first
+    questionNum++;
+
+    // Show the previous button when moving to the next question
+    if (questionNum > 0) {
+        previous.style.display = 'inline-block';
+    }
+
+    // Check if there are more questions
+    if (questionNum < quiz.length) {
+        // Update the quiz content to the next question
+        quizQuestions.innerHTML = `
+            <span>Question ${quiz[questionNum].question_no}</span>
+            <p>${quiz[questionNum].question}</p>
+            
+            <label>
+              <input type="radio" name="answer" value="${quiz[questionNum].option1}"> ${quiz[questionNum].option1}
+            </label>
+            <br/>
+            <label>
+              <input type="radio" name="answer" value="${quiz[questionNum].option2}"> ${quiz[questionNum].option2}
+            </label>
+            <br/>
+            <label>
+              <input type="radio" name="answer" value="${quiz[questionNum].option3}"> ${quiz[questionNum].option3}
+            </label>`;
+    } else {
+        // End the quiz if there are no more questions
+        endQuiz();
+    }
+}
+
+// Add event listener for the previous button
+// previous.addEventListener('click', previousBtn);
+
+
+
+
+    function startTimer() {
+        timer = setInterval(() => {
+            timeLeft--;
+    
+            // Update the timer display
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            timerElement.textContent = ` Time Left : ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    
+            // Check if time is up
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                timeLeft = totalQuizTime;
+                endQuiz()
+                
+            }
+        }, 1000); 
+    }
+    
    
 window.onload = function () {
-    const oneMinute = 60; 
-    const display = document.querySelector('#timer');
-    startTimer(oneMinute, display);
+   
+    startTimer();
 };
 
 
+// function showModal(){
+//    const modal = document.getElementById('confirmation');
+//    modal.style.display = 'block';
 
+//    document.getElementById('continue').onclick =function () {
+//     modal.style.display = 'none';
+//     handleNextClick();
+//    }
 
-// function scoreQuestion(){
-//     console.log(`scored:`, $(score))
+//    document.getElementById('exit').onclick = function(){
+//     modal.style.display = 'none'
+//     endQuiz();
+//    }
+
+//    document.getElementById('close').onclick = function(){
+//     modal.style.display= 'none';
+//    }
+
+//    // Handle clicking outside the modal to close it
+//    window.onclick = function(event) {
+//     if (event.target === modal) {
+//         modal.style.display = 'none';
+//     }
+// };
+
+// // Function to handle continue action
+// function handleContinue() {
+//     checkAnswer();
+//     questionNum++;
+
+//     if (questionNum < quiz.length) {
+//         updateQuestion();
+       
+//         document.getElementById('next').style.display = 'inline-block'; // Show Next button
+//     } else {
+//         endQuiz();
+//         document.getElementById('next').style.display = 'none';
+//     }
+
+//     // Restart the timer for the new question
+//     const oneMinute = 60; // 1 minute in seconds
+//     const display = document.querySelector('#timer');
+//     startTimer(oneMinute, display);
 // }
 
-// scoreElement.innerHTML = 'score';
+// }
 let score = 0;
 
 function checkAnswer() {
@@ -524,7 +591,7 @@ const selectedAnswer = document.querySelector('input[name="answer"]:checked');
 if(selectedAnswer.value === quiz[questionNum].answer){
 console.log(selectedAnswer.value, quiz[questionNum])
 score++;
-alert('correct')
+// alert('correct')
 updateScore();
 // scoreElement.textContentL= 'score'
 } 
@@ -551,6 +618,7 @@ function endQuiz() {
 quizQuestions.innerHTML = "Quiz completed"
 
 next.style.display = "none"
+previous.style.display = 'none'
 }
 
 // console.log(1 + '1')
@@ -558,3 +626,13 @@ next.style.display = "none"
 
 
 
+
+
+
+
+
+// function scoreQuestion(){
+//     console.log(`scored:`, $(score))
+// }
+
+// scoreElement.innerHTML = 'score';
