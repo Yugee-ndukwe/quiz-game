@@ -1,4 +1,4 @@
-
+// display the questions
 const quiz = [
     {
         question_no: 1,
@@ -402,9 +402,7 @@ const quiz = [
     }
 ];
 ;
-
-
-// function for displaying quiz questions
+// Create the necessary variables
 
 const quizQuestions = document.getElementById('questions');
 const option = document.getElementById('options');
@@ -412,17 +410,16 @@ const previous = document.getElementById('previous')
 const next = document.getElementById("next")
 const scoreElement = document.getElementById('score'); // Get the score element
 const timerElement = document.getElementById('timer');
-// const continue = document.getElementById("continue")
 
 let questionNum = 0;
 let timer;
-// let timeLeft = 10;
 let totalQuizTime = 180;
 let timeLeft = totalQuizTime;
+let answeredQuestions = Array(quiz.length).fill(false);
 
 
     
-
+// display the quiz question
 quizQuestions.innerHTML = `
 <span>Question ${quiz[questionNum].question_no}</span>
 <p>${quiz[questionNum].question}</p>
@@ -440,6 +437,7 @@ quizQuestions.innerHTML = `
   <input type="radio" name="answer" value="${quiz[questionNum].option1}" id="option3"> ${quiz[questionNum].option3}
 </label>`;
 
+// Add a function for displaying the previous button
 function previousBtn() {
     if (questionNum > 0) {
         // Decrease the question number to move back
@@ -469,6 +467,7 @@ function previousBtn() {
     }
 }
 
+// Add a function for the next button
 function handleNextClick() {
     // Check the user's answer
     checkAnswer();
@@ -505,12 +504,7 @@ function handleNextClick() {
     }
 }
 
-// Add event listener for the previous button
-// previous.addEventListener('click', previousBtn);
-
-
-
-
+// Add a timer functionality
     function startTimer() {
         timer = setInterval(() => {
             timeLeft--;
@@ -536,89 +530,69 @@ window.onload = function () {
     startTimer();
 };
 
-
-// function showModal(){
-//    const modal = document.getElementById('confirmation');
-//    modal.style.display = 'block';
-
-//    document.getElementById('continue').onclick =function () {
-//     modal.style.display = 'none';
-//     handleNextClick();
-//    }
-
-//    document.getElementById('exit').onclick = function(){
-//     modal.style.display = 'none'
-//     endQuiz();
-//    }
-
-//    document.getElementById('close').onclick = function(){
-//     modal.style.display= 'none';
-//    }
-
-//    // Handle clicking outside the modal to close it
-//    window.onclick = function(event) {
-//     if (event.target === modal) {
-//         modal.style.display = 'none';
-//     }
-// };
-
-// // Function to handle continue action
-// function handleContinue() {
-//     checkAnswer();
-//     questionNum++;
-
-//     if (questionNum < quiz.length) {
-//         updateQuestion();
-       
-//         document.getElementById('next').style.display = 'inline-block'; // Show Next button
-//     } else {
-//         endQuiz();
-//         document.getElementById('next').style.display = 'none';
-//     }
-
-//     // Restart the timer for the new question
-//     const oneMinute = 60; // 1 minute in seconds
-//     const display = document.querySelector('#timer');
-//     startTimer(oneMinute, display);
-// }
-
-// }
+// Declare the score counter
 let score = 0;
 
+
+// Check whether an answer is correct or not
 function checkAnswer() {
 const selectedAnswer = document.querySelector('input[name="answer"]:checked');
 // console.log(selectedAnswer.value);
-if(selectedAnswer.value === quiz[questionNum].answer){
-console.log(selectedAnswer.value, quiz[questionNum])
-score++;
-// alert('correct')
-updateScore();
-// scoreElement.textContentL= 'score'
-} 
-else {
-alert('wrong')
-} 
 
+if(selectedAnswer){
+    answeredQuestions[questionNum] = true;
+
+    if(selectedAnswer.value === quiz[questionNum].answer){
+        score++;
+    }
+
+
+}
 };
 
-function updateScore() {
-    const scoreElement = document.getElementById('scoreElementId'); // Replace with your actual ID
-    if (scoreElement) {
-      scoreElement.innerHTML = `Score: ${currentScore}`; // Update with the actual score
-    } else {
-      console.error('Score element not found');
-    }
-  }
+
+
+// function updateScore() {
+//     const scoreElement = document.getElementById('scoreElementId'); // Replace with your actual ID
+//     if (scoreElement) {
+//       scoreElement.innerHTML = `Score: ${currentScore}`; // Update with the actual score
+//     } else {
+//       console.error('Score element not found');
+//     }
+//   }
   
 
-// next.addEventListener('click', checkAnswer);
 
 
+//End the quiz function 
 function endQuiz() {
-quizQuestions.innerHTML = "Quiz completed"
+   
+    if (questionNum === quiz.length) {
+        // Quiz completed
+        quizQuestions.innerHTML = `
+       <div class= "end-quiz"> 
+       <h3> Congratulations!</h3>
+         <p> You completed the game.</p>
+        <p>  Your score is ${score}.</p>
+        </div>
+        
+        `;
+    } else {
+        // Time expired
+        quizQuestions.innerHTML = `
+         <div class= "end-quiz"> 
+          <h3>OOPP!!!!</h3>
+        <p> Time expired.</p>
+        <p>  Your score is ${score}.</p>
+        </div>
+       
+       `;
+    }
+// quizQuestions.innerHTML = "Quiz completed"
 
 next.style.display = "none"
 previous.style.display = 'none'
+// scoreElement.style.display = 'block'
 }
 
 // console.log(1 + '1')

@@ -9,13 +9,17 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
   />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link>
     <title>QUIZ GAME</title>
 </head>
 <body>
     <div class="container-fluid py-5 d-flex justify-content-center align-items-center quiz-container">
         <div class="row quiz-page ">
-            <div class="col-lg-12 col-lg-6 question-container">
-                <span id="score">0</span>
+            <div class="col-lg-12 col-lg-6 question-container py-4">
+               <div class="score-container"> <span id="score text-end"></span></div>
                 <div id="questions" class="questions">
 
 
@@ -27,19 +31,6 @@
                </div>
              
                <div id="timer"> 03:00</div>
-            </div>
-            <div id="confirmation" class="modal">
-                <div class="modal-content">
-                    <span id="close">&timer;</span>
-                <p>Do  You Want To Continue?</p>
-                <div class="modal-btn">
-                    <button id="Continue?">Yes</button>
-                    <button id="exit">No</button>
-                </div>
-                <br>
-                </div>
-                <p></p>
-
             </div>
         </div>
     </div>
