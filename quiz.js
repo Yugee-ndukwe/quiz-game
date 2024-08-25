@@ -35,7 +35,7 @@ const quiz = [
     {
         question_no: 5,
         question: 'How do you add a comment in JavaScript?',
-        option1: '<!-- This is a comment -->',
+        option1: '/* This is a comment */ and // This is a comment',
         option2: '/* This is a comment */',
         option3: '// This is a comment',
         answer: '/* This is a comment */ and // This is a comment',
@@ -187,7 +187,7 @@ const quiz = [
     {
         question_no: 24,
         question: 'Which operator is used to compare two values for equality in JavaScript?',
-        option1: '==',
+        option1: '== and ===',
         option2: '===',
         option3: '!=',
         answer: '== and ===',
@@ -204,7 +204,7 @@ const quiz = [
         question_no: 26,
         question: 'How do you create a new React component?',
         option1: 'function MyComponent() {}',
-        option2: 'const MyComponent = () => {};',
+        option2: 'function MyComponent() {} and const MyComponent = () => {};',
         option3: 'class MyComponent {}',
         answer: 'function MyComponent() {} and const MyComponent = () => {};',
     },
@@ -291,7 +291,7 @@ const quiz = [
     {
         question_no: 37,
         question: 'How do you pass data between components in React?',
-        option1: 'Using props',
+        option1: 'Using props and context',
         option2: 'Using context',
         option3: 'Using local storage',
         answer: 'Using props and context',
@@ -317,7 +317,7 @@ const quiz = [
         question: 'How do you create a ref in React?',
         option1: 'React.createRef()',
         option2: 'useRef()',
-        option3: 'createRef()',
+        option3: 'React.createRef() and useRef()',
         answer: 'React.createRef() and useRef()',
     },
     {
@@ -349,7 +349,7 @@ const quiz = [
         question: 'How do you define a functional component in React?',
         option1: 'const MyComponent = () => {};',
         option2: 'function MyComponent() {};',
-        option3: 'class MyComponent {};',
+        option3: 'const MyComponent = () => {}; and function MyComponent() {};',
         answer: 'const MyComponent = () => {}; and function MyComponent() {};',
     },
     {
@@ -402,8 +402,8 @@ const quiz = [
     }
 ];
 ;
-// Create the necessary variables
 
+// Create the necessary variables
 const quizQuestions = document.getElementById('questions');
 const option = document.getElementById('options');
 const previous = document.getElementById('previous')
@@ -413,7 +413,7 @@ const timerElement = document.getElementById('timer');
 
 let questionNum = 0;
 let timer;
-let totalQuizTime = 180;
+let totalQuizTime = 300;
 let timeLeft = totalQuizTime;
 let answeredQuestions = Array(quiz.length).fill(false);
 

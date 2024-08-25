@@ -23,7 +23,14 @@ body{
     border-radius: 10px;
     border: 0;
     outline: 0;
-    animation: pulse 1s 0.4s ease;
+  
+    background: #A1BD6B;
+    color: #fff;
+    box-shadow: 3px 2px 3px 2px #A1742f;
+} 
+
+.btn:hover{
+    animation: pulse 1s 0.4s forwards;
 }
 .quiz-container{
     background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_fw-2v-XS65BMr4uSsLpsKaeHtbwcmNbnZw&s);
@@ -31,6 +38,8 @@ body{
     height: 100vh;
     /* background-repeat: no-repeat; */
     animation: moveBackground 30s linear infinite;
+    font-family: "Montserrat", sans-serif;
+
 }
 
 @keyframes moveBackground {
@@ -74,7 +83,6 @@ body{
 .questions{
     font-size: 18px;
     padding: 10px 10px;
-    font-family: "Montserrat", sans-serif;
     letter-spacing: 1px;
    
 }
@@ -97,6 +105,7 @@ body{
     font-size: 20px;
     transform: translateX(0.7s ease);
     letter-spacing: 2px;
+    box-shadow: 3px 2px 3px 2px #A1BD6B;
 }
 
 #previous:hover{
@@ -111,18 +120,18 @@ body{
     height: 40px;
     border: 0;
     outline: 0;
-    border-radius: 18px;
+    border-radius: 6px;
     font-size: 20px;
     transform: translateX(0.7s ease);
     letter-spacing: 2px;
+    box-shadow: 3px 2px 3px 2px #A1BD6B;
     
     
 
 }
 #next:hover{
     animation: pulse 1s 0.9s ease;
-    background: #1dda26;
-    color: #fff;
+    /* color: #fff; */
    
 
 }
