@@ -16,6 +16,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+   
 }
 .play h1{
     font-size: 30px;
@@ -88,7 +89,7 @@ body{
     color: #fff;
     padding: 10px;
     margin: 0 10px;
-    width: 100vw;
+   max-width: 400px;
    
 }
 .questions{
