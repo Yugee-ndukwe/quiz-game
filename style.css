@@ -8,9 +8,16 @@ body{
     height: 100vh;
     width: 100%;
     color: #171715;
+    text-align: center;
+}
+
+.start-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .play h1{
-    font-size: 50px;
+    font-size: 30px;
 }
 
 .play p{
