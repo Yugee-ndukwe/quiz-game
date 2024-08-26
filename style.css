@@ -44,8 +44,8 @@ body{
 .quiz-container{
     background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_fw-2v-XS65BMr4uSsLpsKaeHtbwcmNbnZw&s);
     background-size: contain;
-    height: 100vh;
-   width: 100%;
+    /* height: 100vh; */
+   /* width: 100%; */
     animation: moveBackground 30s linear infinite;
     font-family: "Montserrat", sans-serif;
 
@@ -62,10 +62,10 @@ body{
 
 .quiz-page{
     background: #171715;
-    padding: 30px;
+    /* padding: 30px; */
     display: flex;
     justify-content: center;
-    /* width: auto; */
+    width: 100vw;
 }
 
 .score-container{
@@ -87,16 +87,16 @@ body{
 }
 .question-container{
     color: #fff;
-    padding: 10px;
-    margin: 0 10px;
+    /* padding: 10px; */
+    /* margin: 0 10px; */
    max-width: 400px;
    
 }
 .questions{
     font-size: 18px;
-    padding: 10px 10px;
+    /* padding: 10px 10px; */
     letter-spacing: 1px;
-    max-width: fit-content;
+    /* max-width: fit-content; */
    
 }
 
