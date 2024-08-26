@@ -425,15 +425,15 @@ quizQuestions.innerHTML = `
 <p>${quiz[questionNum].question}</p>
 
 
-<label>
+<label class= "options">
   <input type="radio" name="answer" value = "${quiz[questionNum].option1}" id="option1"> ${quiz[questionNum].option1}
 </label>
 <br/>
-<label>
+<label  class= "options">
   <input type="radio" name="answer" value="${quiz[questionNum].option2}" id="option2"> ${quiz[questionNum].option2}
 </label>
 <br/>
-<label>
+<label  class= "options">
   <input type="radio" name="answer" value="${quiz[questionNum].option1}" id="option3"> ${quiz[questionNum].option3}
 </label>`;
 
